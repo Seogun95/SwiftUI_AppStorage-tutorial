@@ -33,18 +33,13 @@ struct OnboardingView: View {
                 
                 //MARK: - CENTER
                 ZStack {
-                    ZStack {
-                        Capsule()
-                            .stroke(.white.opacity(0.2), lineWidth: 40)
-                            .frame(width: 200, height: 200, alignment: .center)
-                        Capsule()
-                            .stroke(.white.opacity(0.2), lineWidth: 80)
-                            .frame(width: 200, height: 200, alignment: .center)
-                        
-                        Image("character-1")
-                            .resizable()
-                            .scaledToFit()
-                    }
+                   
+                    CircleGroupView(CircleColor:.white, CircleOpacity: 0.2)
+                    
+                    Image("character-1")
+                        .resizable()
+                        .scaledToFit()
+                    
                 } //: Center
                 Spacer()
                 //MARK: - FOOTER

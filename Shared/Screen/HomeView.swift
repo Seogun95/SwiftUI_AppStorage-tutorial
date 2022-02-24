@@ -8,8 +8,43 @@
 import SwiftUI
 
 struct HomeView: View {
+    @AppStorage("Onboarding") var isOnboardingActive: Bool = false
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        VStack {
+            Spacer()
+            //MARK: - HEADER
+            ZStack {
+                CircleGroupView(CircleColor: Color("ColorRed"), CircleOpacity: 0.2)
+                
+                Image("character-2")
+                    .resizable()
+                    .scaledToFit()
+                    .padding()
+            }
+            //MARK: - CENTER
+            
+                Text("이곳은 HomeView 입니다. 아래로만 쌓아줄것이기 때문에 VStack만 사용합니다.")
+                    .font(.title3)
+                    .padding()
+                    .multilineTextAlignment(.center)
+                    .foregroundColor(.secondary)
+           Spacer()
+            
+            Button(action: {
+                isOnboardingActive = true
+            }) {
+                 Image(systemName: "house.circle.fill")
+                    .imageScale(.medium)
+                 Text("시작하기")
+                    .font(.system(.title3, design: .rounded))
+                    .fontWeight(.bold)
+            }
+            .buttonStyle(.borderedProminent)
+            .buttonBorderShape(.capsule)
+            .controlSize(.regular)
+            .foregroundColor(.white)
+            //MARK: - FOOTER
+        }//: VStack
     }
 }
 
