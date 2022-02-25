@@ -9,86 +9,112 @@ import SwiftUI
 
 struct OnboardingView: View {
     @AppStorage("Onboarding") var isOnboardingActive: Bool = true
+    //실제 화면 넓이의 - 80 : 왼쪽 오른쪽에 각각 40 포인트씩 패딩이 생김
+    @State private var buttonWidth: Double = UIScreen.main.bounds.width - 80
+    @State private var buttonOffset: CGFloat = 0 // CGFloat이 0과 같으면 이 속성은 가로 방향을 의미함
+    
     var body: some View {
         ZStack {
-            Color("ColorBlue").ignoresSafeArea(.all)
-            VStack {
+            Color("ColorBlue").ignoresSafeArea(.all, edges: .all)
+            VStack(spacing: 0) {
+                //MARK: HEADER
                 Spacer()
-                //MARK: - HEADER
+                
                 VStack(spacing: 0) {
-                    Text("SwiftUI 시작")
-                        .font(.largeTitle)
+                    Text("SWIFTUI")
+                        .font(.system(size: 60))
+                        .fontWeight(.bold)
                         .foregroundColor(.white)
-                        .fontWeight(.heavy)
                     
                     Text("""
-                    AppStoreage를 사용하여
-                    뷰 생성하는 방법에 대해
-                    알아보도록 합시다.
+                    SwiftUI에 대해 알아보도록 합시다.
+                    이것은 아주 쉬운 튜토리얼 입니다.
                     """)
-                        .font(.headline)
+                        .font(.title3)
+                        .fontWeight(.light)
                         .foregroundColor(.white)
                         .multilineTextAlignment(.center)
-                } //:Header
-                
-                //MARK: - CENTER
-                ZStack {
-                   
-                    CircleGroupView(CircleColor:.white, CircleOpacity: 0.2)
+                        .padding(.horizontal, 10)
                     
+                }//: HEADER
+                
+                //MARK: CENTER
+                ZStack {
+                    CircleGroupView(CircleColor: .white, CircleOpacity: 0.2)
                     Image("character-1")
                         .resizable()
                         .scaledToFit()
                     
-                } //: Center
+                }//: CENTER
+                
                 Spacer()
-                //MARK: - FOOTER
+                
+                //MARK: FOOTER
                 ZStack {
-                    Capsule()
-                        .fill(Color(.white).opacity(0.2))
-                    Capsule()
-                        .fill(Color(.white).opacity(0.2))
-                        .padding(8)
+                    // 커스텀 버튼
                     
+                    //1. background
+                    Capsule()
+                        .fill(Color.white.opacity(0.2))
+                    
+                    Capsule()
+                        .fill(Color.white.opacity(0.2))
+                        .padding(8)
+                    //2. 액션
+                    Text("시작하기")
+                        .font(.system(.title3, design: .rounded))
+                        .fontWeight(.bold)
+                        .foregroundColor(.white)
+                        .offset(x: 20)
+                    
+                    //3. 캡슐 - 다이나믹 넓이
                     HStack {
-                        Circle()
+                        Capsule()
                             .fill(Color("ColorRed"))
-                            .frame(width: 80)
+                            .frame(width: buttonOffset + 80)
                         
                         Spacer()
                     }
-                    
-                    HStack {
-                        Text("시작하기")
-                            .font(.title2)
-                            .foregroundColor(.white)
-                            .offset(x: 20)
-                    }
-                    
+                    //4. 드래그 버튼
                     HStack {
                         ZStack {
                             Circle()
-                                .fill(Color("colorRed"))
+                                .fill(Color("ColorRed"))
                             Circle()
-                                .fill(Color(.black).opacity(0.2))
-                                .padding(10)
-                            Image(systemName: "house.circle")
-                                .font(.system(size: 25).weight(.bold))
+                                .fill(.black.opacity(0.15))
+                                .padding(8)
+                            
+                            Image(systemName: "chevron.right.2")
+                                .font(.system(size: 20, weight: .bold))
                         }
                         .foregroundColor(.white)
                         .frame(width: 80, height: 80, alignment: .center)
-                        .onTapGesture {
-                            isOnboardingActive = false
-                        }
+                        .offset(x: buttonOffset)
+                        .gesture(
+                            DragGesture()
+                                .onChanged { gesture in
+                                    if gesture.translation.width > 0 && buttonOffset <= buttonWidth - 80 {
+                                        buttonOffset = gesture.translation.width
+                                    }
+                                }
+                                .onEnded { _ in
+                                    
+                                    if buttonOffset > buttonWidth / 2 {
+                                        buttonOffset = buttonWidth - 80
+                                        isOnboardingActive = false
+                                    } else {
+                                        buttonOffset = 0
+                                    }
+                                }
+                        )//:GESTURE
                         Spacer()
-                    }
-                }
-                .frame(height: 80)
+                    }//:HStack
+                    
+                } //: FOOTER
+                .frame(width: buttonWidth, height: 80, alignment: .center)
                 .padding()
-                
-                
-            }//: VStack
-        } //: ZStack
+            }//:VSTACK
+        }//: ZSTACK
     }
 }
 

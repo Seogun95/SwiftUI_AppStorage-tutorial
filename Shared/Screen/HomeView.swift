@@ -22,7 +22,6 @@ struct HomeView: View {
                     .padding()
             }
             //MARK: - CENTER
-            
                 Text("이곳은 HomeView 입니다. 아래로만 쌓아줄것이기 때문에 VStack만 사용합니다.")
                     .font(.title3)
                     .padding()

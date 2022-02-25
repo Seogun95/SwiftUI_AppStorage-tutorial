@@ -96,7 +96,6 @@
 			isa = PBXGroup;
 			children = (
 				6C7FCBFB27C7B7C200913554 /* Shared */,
-				6C7FCC3F27C7B9CC00913554 /* Views */,
 				6C7FCC0A27C7B7C400913554 /* macOS */,
 				6C7FCC1327C7B7C400913554 /* Tests iOS */,
 				6C7FCC1F27C7B7C400913554 /* Tests macOS */,
@@ -107,6 +106,7 @@
 		6C7FCBFB27C7B7C200913554 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
+				6C7FCC3F27C7B9CC00913554 /* Views */,
 				6C7FCC3E27C7B88200913554 /* Screen */,
 				6C7FCBFC27C7B7C200913554 /* SwiftUI_AppStorageApp.swift */,
 				6C7FCBFE27C7B7C400913554 /* Assets.xcassets */,
