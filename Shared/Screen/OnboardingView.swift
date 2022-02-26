@@ -12,6 +12,7 @@ struct OnboardingView: View {
     //실제 화면 넓이의 - 80 : 왼쪽 오른쪽에 각각 40 포인트씩 패딩이 생김
     @State private var buttonWidth: Double = UIScreen.main.bounds.width - 80
     @State private var buttonOffset: CGFloat = 0 // CGFloat이 0과 같으면 이 속성은 가로 방향을 의미함
+    @State private var isAnimating: Bool = false
     
     var body: some View {
         ZStack {
@@ -37,6 +38,10 @@ struct OnboardingView: View {
                         .padding(.horizontal, 10)
                     
                 }//: HEADER
+                .opacity(isAnimating ? 1 : 0)
+                .offset(y: isAnimating ? 0 : -40)
+                 //animation value는 iOS 15 이상에서 필수로 적어줘야 함
+                .animation(.easeOut(duration: 1), value: isAnimating)
                 
                 //MARK: CENTER
                 ZStack {
@@ -44,6 +49,8 @@ struct OnboardingView: View {
                     Image("character-1")
                         .resizable()
                         .scaledToFit()
+                        .opacity(isAnimating ? 1 : 0)
+                        .animation(.easeOut(duration: 0.5), value: isAnimating)
                     
                 }//: CENTER
                 
@@ -99,22 +106,29 @@ struct OnboardingView: View {
                                 }
                                 .onEnded { _ in
                                     
-                                    if buttonOffset > buttonWidth / 2 {
-                                        buttonOffset = buttonWidth - 80
-                                        isOnboardingActive = false
-                                    } else {
-                                        buttonOffset = 0
+                                    withAnimation(Animation.easeOut(duration: 0.5)) {
+                                        if buttonOffset > buttonWidth / 2 {
+                                            buttonOffset = buttonWidth - 80
+                                            isOnboardingActive = false
+                                        } else {
+                                            buttonOffset = 0
+                                        }
                                     }
                                 }
                         )//:GESTURE
                         Spacer()
                     }//:HStack
-                    
                 } //: FOOTER
                 .frame(width: buttonWidth, height: 80, alignment: .center)
                 .padding()
+                .opacity(isAnimating ? 1 : 0)
+                .offset(y: isAnimating ? 0 : 60)
+                .animation(.easeOut(duration: 1), value: isAnimating)
             }//:VSTACK
         }//: ZSTACK
+        .onAppear(perform: {
+            isAnimating = true
+        })
     }
 }
 

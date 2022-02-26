@@ -9,6 +9,8 @@ import SwiftUI
 
 struct HomeView: View {
     @AppStorage("Onboarding") var isOnboardingActive: Bool = false
+    @State private var isAnimating: Bool = false
+    
     var body: some View {
         VStack {
             Spacer()
@@ -20,21 +22,28 @@ struct HomeView: View {
                     .resizable()
                     .scaledToFit()
                     .padding()
+                    .offset(y: isAnimating ? 35: -35)
+                    .animation(
+                        Animation
+                            .easeInOut(duration: 4)
+                            .repeatForever(), value: isAnimating)
             }
             //MARK: - CENTER
-                Text("이곳은 HomeView 입니다. 아래로만 쌓아줄것이기 때문에 VStack만 사용합니다.")
-                    .font(.title3)
-                    .padding()
-                    .multilineTextAlignment(.center)
-                    .foregroundColor(.secondary)
-           Spacer()
+            Text("이곳은 HomeView 입니다. 아래로만 쌓아줄것이기 때문에 VStack만 사용합니다.")
+                .font(.title3)
+                .padding()
+                .multilineTextAlignment(.center)
+                .foregroundColor(.secondary)
+            Spacer()
             
             Button(action: {
-                isOnboardingActive = true
+                withAnimation {
+                    isOnboardingActive = true
+                }
             }) {
-                 Image(systemName: "house.circle.fill")
+                Image(systemName: "house.circle.fill")
                     .imageScale(.medium)
-                 Text("시작하기")
+                Text("시작하기")
                     .font(.system(.title3, design: .rounded))
                     .fontWeight(.bold)
             }
@@ -44,6 +53,11 @@ struct HomeView: View {
             .foregroundColor(.white)
             //MARK: - FOOTER
         }//: VStack
+        .onAppear(perform: {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: {
+                isAnimating = true
+            })
+        })
     }
 }
 
@@ -52,3 +66,4 @@ struct HomeView_Previews: PreviewProvider {
         HomeView()
     }
 }
+
