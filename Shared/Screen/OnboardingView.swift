@@ -18,6 +18,8 @@ struct OnboardingView: View {
     @State private var indicatorOpacity: Double = 1.0
     @State private var textTitle: String = "SwiftUI"
     
+    
+    let hapticFeedback = UINotificationFeedbackGenerator()
     var body: some View {
         ZStack {
             Color("ColorBlue").ignoresSafeArea(.all, edges: .all)
@@ -58,7 +60,7 @@ struct OnboardingView: View {
                         .blur(radius: abs(imageOffset.width / 10))
                         //블러 효과에 음수값을 제공하는것은 의미가 없음.
                         .animation(.easeOut(duration: 1), value: imageOffset)
-                    Image("character-1")
+                    Image("character-1") 
                         .resizable()
                         .scaledToFit()
                         .opacity(isAnimating ? 1 : 0)
@@ -159,9 +161,12 @@ struct OnboardingView: View {
                                     
                                     withAnimation(Animation.easeOut(duration: 0.5)) {
                                         if buttonOffset > buttonWidth / 2 {
+                                            playSound(sound: "chimeup", type: "mp3")
+                                            hapticFeedback.notificationOccurred(.success)
                                             buttonOffset = buttonWidth - 80
                                             isOnboardingActive = false
                                         } else {
+                                            hapticFeedback.notificationOccurred(.warning)
                                             buttonOffset = 0
                                         }
                                     }
@@ -180,6 +185,7 @@ struct OnboardingView: View {
         .onAppear(perform: {
             isAnimating = true
         })
+        .preferredColorScheme(.dark)
     }
 }
 

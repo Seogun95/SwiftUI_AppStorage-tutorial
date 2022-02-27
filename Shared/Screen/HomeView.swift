@@ -38,7 +38,9 @@ struct HomeView: View {
             
             Button(action: {
                 withAnimation {
+                    playSound(sound: "success", type: "m4a")
                     isOnboardingActive = true
+                    
                 }
             }) {
                 Image(systemName: "house.circle.fill")

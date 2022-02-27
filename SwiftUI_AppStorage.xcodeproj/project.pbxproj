@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6C7A5F0927CC155100D66514 /* AudioPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C7A5F0827CC155100D66514 /* AudioPlayer.swift */; };
+		6C7A5F0A27CC155100D66514 /* AudioPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C7A5F0827CC155100D66514 /* AudioPlayer.swift */; };
+		6C7A5F0D27CC19EB00D66514 /* success.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 6C7A5F0B27CC19EA00D66514 /* success.m4a */; };
+		6C7A5F0E27CC19EB00D66514 /* success.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 6C7A5F0B27CC19EA00D66514 /* success.m4a */; };
+		6C7A5F0F27CC19EB00D66514 /* chimeup.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 6C7A5F0C27CC19EA00D66514 /* chimeup.mp3 */; };
+		6C7A5F1027CC19EB00D66514 /* chimeup.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 6C7A5F0C27CC19EA00D66514 /* chimeup.mp3 */; };
 		6C7FCC1527C7B7C400913554 /* Tests_iOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C7FCC1427C7B7C400913554 /* Tests_iOS.swift */; };
 		6C7FCC1727C7B7C400913554 /* Tests_iOSLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C7FCC1627C7B7C400913554 /* Tests_iOSLaunchTests.swift */; };
 		6C7FCC2127C7B7C400913554 /* Tests_macOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C7FCC2027C7B7C400913554 /* Tests_macOS.swift */; };
@@ -43,6 +49,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		6C7A5F0827CC155100D66514 /* AudioPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayer.swift; sourceTree = "<group>"; };
+		6C7A5F0B27CC19EA00D66514 /* success.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = success.m4a; sourceTree = "<group>"; };
+		6C7A5F0C27CC19EA00D66514 /* chimeup.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = chimeup.mp3; sourceTree = "<group>"; };
 		6C7FCBFC27C7B7C200913554 /* SwiftUI_AppStorageApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUI_AppStorageApp.swift; sourceTree = "<group>"; };
 		6C7FCBFD27C7B7C200913554 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		6C7FCBFE27C7B7C400913554 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -92,6 +101,23 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		6C7A5F0727CC152E00D66514 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				6C7A5F0827CC155100D66514 /* AudioPlayer.swift */,
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
+		6C7A5F1127CC19F000D66514 /* Sound */ = {
+			isa = PBXGroup;
+			children = (
+				6C7A5F0C27CC19EA00D66514 /* chimeup.mp3 */,
+				6C7A5F0B27CC19EA00D66514 /* success.m4a */,
+			);
+			path = Sound;
+			sourceTree = "<group>";
+		};
 		6C7FCBF627C7B7C100913554 = {
 			isa = PBXGroup;
 			children = (
@@ -106,10 +132,12 @@
 		6C7FCBFB27C7B7C200913554 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
+				6C7A5F0727CC152E00D66514 /* Utilities */,
 				6C7FCC3F27C7B9CC00913554 /* Views */,
 				6C7FCC3E27C7B88200913554 /* Screen */,
 				6C7FCBFC27C7B7C200913554 /* SwiftUI_AppStorageApp.swift */,
 				6C7FCBFE27C7B7C400913554 /* Assets.xcassets */,
+				6C7A5F1127CC19F000D66514 /* Sound */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -294,6 +322,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6C7A5F0F27CC19EB00D66514 /* chimeup.mp3 in Resources */,
+				6C7A5F0D27CC19EB00D66514 /* success.m4a in Resources */,
 				6C7FCC2827C7B7C400913554 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -317,6 +347,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6C7A5F1027CC19EB00D66514 /* chimeup.mp3 in Resources */,
+				6C7A5F0E27CC19EB00D66514 /* success.m4a in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -332,6 +364,7 @@
 				6C7FCC3C27C7B87A00913554 /* HomeView.swift in Sources */,
 				6C7FCC2627C7B7C400913554 /* ContentView.swift in Sources */,
 				6C7FCC2427C7B7C400913554 /* SwiftUI_AppStorageApp.swift in Sources */,
+				6C7A5F0927CC155100D66514 /* AudioPlayer.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -362,6 +395,7 @@
 			files = (
 				6C7FCC2327C7B7C400913554 /* Tests_macOSLaunchTests.swift in Sources */,
 				6C7FCC2127C7B7C400913554 /* Tests_macOS.swift in Sources */,
+				6C7A5F0A27CC155100D66514 /* AudioPlayer.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
