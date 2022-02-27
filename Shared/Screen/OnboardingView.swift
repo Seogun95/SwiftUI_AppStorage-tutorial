@@ -13,19 +13,26 @@ struct OnboardingView: View {
     @State private var buttonWidth: Double = UIScreen.main.bounds.width - 80
     @State private var buttonOffset: CGFloat = 0 // CGFloat이 0과 같으면 이 속성은 가로 방향을 의미함
     @State private var isAnimating: Bool = false
+    //CGSize(width: 0, height: 0) 는 .zero 로 표시할 수 있음
+    @State private var imageOffset: CGSize = .zero
+    @State private var indicatorOpacity: Double = 1.0
+    @State private var textTitle: String = "SwiftUI"
     
     var body: some View {
         ZStack {
             Color("ColorBlue").ignoresSafeArea(.all, edges: .all)
-            VStack(spacing: 0) {
+            VStack(spacing: 20) {
                 //MARK: HEADER
                 Spacer()
                 
                 VStack(spacing: 0) {
-                    Text("SWIFTUI")
+                    Text(textTitle)
                         .font(.system(size: 60))
                         .fontWeight(.bold)
                         .foregroundColor(.white)
+                        .transition(.opacity)
+                    //더 이상 동일한 뷰(textTitle)가 아님을 알리기 위한 identifiable 지정
+                        .id(textTitle)
                     
                     Text("""
                     SwiftUI에 대해 알아보도록 합시다.
@@ -40,19 +47,63 @@ struct OnboardingView: View {
                 }//: HEADER
                 .opacity(isAnimating ? 1 : 0)
                 .offset(y: isAnimating ? 0 : -40)
-                 //animation value는 iOS 15 이상에서 필수로 적어줘야 함
+                //animation value는 iOS 15 이상에서 필수로 적어줘야 함
                 .animation(.easeOut(duration: 1), value: isAnimating)
                 
                 //MARK: CENTER
+                //Horizontal Parallax Effect
                 ZStack {
                     CircleGroupView(CircleColor: .white, CircleOpacity: 0.2)
+                        .offset(x: imageOffset.width * -1.2, y: 0) //image와 반대로 가게 하기 위해 음수값 사용
+                        .blur(radius: abs(imageOffset.width / 10))
+                        //블러 효과에 음수값을 제공하는것은 의미가 없음.
+                        .animation(.easeOut(duration: 1), value: imageOffset)
                     Image("character-1")
                         .resizable()
                         .scaledToFit()
                         .opacity(isAnimating ? 1 : 0)
                         .animation(.easeOut(duration: 0.5), value: isAnimating)
+                        .offset(x: imageOffset.width * 1.2, y: 0)
+                        .rotationEffect(.degrees(Double(imageOffset.width / 20)))
+                        .gesture(
+                            DragGesture()
+                                .onChanged { gesture in
+                                    //abs : 주어진 숫자의 절대값을 반환한다
+                                    //즉, 왼쪽으로 드래그하면 이 값이 음수 값으로 이동
+                                    //여기서 조건은 양쪽 150 포인트 까지만 기동 가능함
+                                    if abs(imageOffset.width) <= 150 {
+                                        imageOffset = gesture.translation
+                                        //시작부터 현재까지의 전체 움직임에 대한 정보를 줌
+                                        
+                                        //드래그 할때마다 투명도 조절
+                                        withAnimation(Animation.linear(duration: 0.2)) {
+                                            indicatorOpacity = 0
+                                            textTitle = "서근개발노트"
+                                        }
+                                    }
+                                }
+                            
+                                .onEnded { _ in
+                                    imageOffset = .zero
+                                    withAnimation(Animation.linear(duration: 0.2)) {
+                                        indicatorOpacity = 1
+                                        textTitle = "SwiftUI"
+                                    }
+                                }
+                        ) //:gesture
+                        .animation(.easeOut(duration: 1), value: imageOffset)
                     
                 }//: CENTER
+                .overlay(
+                    Image(systemName: "arrow.left.and.right.circle")
+                        .font(.system(size: 40, weight: .ultraLight))
+                        .foregroundColor(.white)
+                        .offset(y: 20)
+                        .opacity(isAnimating ? 1 : 0)
+                        .animation(.easeOut(duration: 1).delay(2), value: isAnimating)
+                        .opacity(indicatorOpacity) //드래그 할때마다 투명도 조절
+                    , alignment: .bottom //아래로 요소를 지정함
+                 )
                 
                 Spacer()
                 
